@@ -9,7 +9,7 @@ DB_PATH = os.path.join(os.path.dirname(__file__), 'iot_security.db')
 # Flask Configuration
 FLASK_HOST = '0.0.0.0'
 FLASK_PORT = 5000
-FLASK_DEBUG = True
+FLASK_DEBUG = False  # Debug mode disabled for security
 
 # Anomaly Detection Configuration
 CONTAMINATION = 0.1  # Expected proportion of outliers
