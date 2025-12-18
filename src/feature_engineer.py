@@ -95,7 +95,7 @@ class FeatureEngineer:
         df['events_per_window'] = df.rolling(
             window=f'{self.time_window}s', 
             on='datetime'
-        ).size()
+        ).count()['timestamp']
         
         return df
     
