@@ -1,0 +1,188 @@
+ID;Date;Source;Event group;Event type;Event
+1;2025-09-12 16:30:39;Startup;system;notice;Device startup completed
+2;2025-09-12 16:30:41;Switch Events;network;notice;Port link state of port CPU/WiFi (1000 baseT) changed to UP
+3;2025-09-12 16:30:41;Switch Events;network;notice;Port link state of port WAN (1000 baseT) changed to UP
+4;2025-09-12 16:37:33;DHCP;network;info;Leased 192.168.1.232 IP address for client b0:dc:ef:b1:cb:23 - UTKARSH571 in WiFi
+5;2025-09-12 16:37:33;WiFi;connections;notice;RUT_E127_5G: WiFi client connected: B0:DC:EF:B1:CB:23
+6;2025-09-12 16:38:00;Web UI;connections;notice;"Invalid password attempt for ""admin"" from 192.168.1.232 to 192.168.1.1 via HTTPS, attempt 1 of 10"
+7;2025-09-12 16:38:41;Web UI;connections;notice;"User ""admin"" successfully authenticated on HTTPS from 192.168.1.232 to 192.168.1.1"
+8;2025-09-12 16:38:41;IP Block;connections;notice;IP blocking entry (192.168.1.232 -> 192.168.1.1:443) deleted.
+9;2025-09-12 16:39:13;CONFIG;events;notice;"User ""admin"" changed Vuci configuration in ""/system/wizard/step_pwd"" page"
+10;2025-09-12 16:40:14;CONFIG;events;notice;"User ""admin"" changed Ntpclient configuration in ""/system/wizard/step_pwd"" page"
+11;2025-09-12 16:40:14;CONFIG;events;notice;"User ""admin"" changed System configuration in ""/system/wizard/step_pwd"" page"
+12;2025-09-12 16:40:14;CONFIG;events;notice;"User ""admin"" changed Vuci configuration in ""/system/wizard/step_pwd"" page"
+13;2025-09-12 16:40:32;CONFIG;events;notice;"User ""admin"" changed Simcard configuration in ""/system/wizard/step_wan"" page"
+14;2025-09-12 16:42:04;CONFIG;events;notice;"User ""admin"" changed Wireless configuration in ""/system/wizard/step_wifi"" page"
+15;2025-09-12 16:42:15;CONFIG;events;notice;"User ""admin"" changed Rms_mqtt configuration in ""/system/wizard/step_rms"" page"
+16;2025-09-12 16:42:30;Switch Events;network;notice;Port link state of port WAN changed to DOWN
+17;2025-09-12 16:43:00;WiFi;connections;notice;RUT_E127_5G: WiFi client disconnected: B0:DC:EF:B1:CB:23
+18;2025-09-12 16:43:04;WiFi;connections;notice;RUT_E127_5G: WiFi client connected: B0:DC:EF:B1:CB:23
+19;2025-09-12 16:48:13;WiFi;connections;notice;RUT_E127_5G: WiFi client disconnected: B0:DC:EF:B1:CB:23
+20;2025-09-12 16:57:38;WiFi;connections;notice;RUT_E127_5G: WiFi client connected: B0:DC:EF:B1:CB:23
+21;2025-09-12 16:57:50;WiFi;connections;notice;RUT_E127_5G: WiFi client connected: 50:C2:E8:33:D5:4B
+22;2025-09-12 16:57:51;DHCP;network;info;Leased 192.168.1.131 IP address for client 50:c2:e8:33:d5:4b - Pratham-Rog-Strix-G15 in WiFi
+23;2025-09-12 16:58:06;WiFi;connections;notice;RUT_E127_5G: WiFi client disconnected: 50:C2:E8:33:D5:4B
+24;2025-09-12 16:58:11;WiFi;connections;notice;RUT_E127_5G: WiFi client connected: 50:C2:E8:33:D5:4B
+25;2025-09-12 16:58:25;WiFi;connections;notice;RUT_E127_5G: WiFi client disconnected: 50:C2:E8:33:D5:4B
+26;2025-09-12 16:58:37;WiFi;connections;notice;RUT_E127_5G: WiFi client connected: 50:C2:E8:33:D5:4B
+27;2025-09-12 16:58:48;Web UI;connections;notice;"User ""admin"" successfully authenticated on HTTPS from 192.168.1.232 to 192.168.1.1"
+28;2025-09-12 16:58:50;CONFIG;events;notice;"User ""admin"" changed Overview configuration in ""/status/overview"" page"
+29;2025-09-12 16:59:43;WiFi;connections;notice;RUT_E127_5G: WiFi client disconnected: 50:C2:E8:33:D5:4B
+30;2025-09-12 17:00:07;CONFIG;events;notice;"User ""admin"" changed Network configuration in ""/network/wan"" page"
+31;2025-09-12 17:00:40;Startup;system;info;Device startup after unexpected shutdown
+32;2025-09-12 17:00:40;Startup;system;notice;Device startup completed
+33;2025-09-12 17:00:43;Switch Events;network;notice;Port link state of port CPU/WiFi (1000 baseT) changed to UP
+34;2025-09-12 17:04:07;SIM status;events;info;SIM state changed to not inserted (internal modem)
+35;2025-09-12 17:04:14;SIM status;events;info;SIM state changed to not inserted (internal modem)
+36;2025-09-12 17:40:02;SIM status;events;info;SIM state changed to not inserted (internal modem)
+37;2025-09-12 17:40:10;SIM status;events;info;SIM state changed to not inserted (internal modem)
+38;2025-09-12 17:42:36;DHCP;network;info;Leased 192.168.1.232 IP address for client b0:dc:ef:b1:cb:23 - UTKARSH571 in WiFi
+39;2025-09-12 17:42:36;WiFi;connections;notice;RUT_E127_5G: WiFi client connected: B0:DC:EF:B1:CB:23
+40;2025-09-12 17:42:44;Network Type;network;info;Joined LTE network (internal modem)
+41;2025-09-12 17:42:44;Network Operator;network;info;Connected to 405857 operator (internal modem)
+42;2025-09-12 17:42:46;Mobile Data;network;info;"Mobile data connected (IPv6, internal modem)"
+43;2025-09-12 17:42:49;Mobile Data;network;info;"Mobile data connected (IPv4, internal modem)"
+44;2025-09-12 17:43:01;Web UI;connections;notice;"User ""admin"" successfully authenticated on HTTPS from 192.168.1.232 to 192.168.1.1"
+45;2025-09-25 16:22:16;Health checker;network;notice;DNS resolution restored
+46;2025-09-25 16:23:17;Health checker;network;notice;IPv4 connectivity restored
+47;2025-09-25 16:23:18;Health checker;network;notice;IPv6 connectivity restored
+48;2025-09-25 16:24:02;Switch Events;network;notice;Port link state of port LAN1 (100 baseT) changed to UP
+49;2025-09-25 16:24:27;Health checker;network;notice;IPv4 connectivity started to fail
+50;2025-09-25 16:24:33;Health checker;network;notice;IPv6 connectivity started to fail
+51;2025-09-25 16:26:05;SIM status;events;info;SIM state changed to not inserted (internal modem)
+52;2025-09-25 16:26:06;Mobile Data;network;info;Mobile data disconnected (internal modem)
+53;2025-09-25 16:26:14;SIM status;events;info;SIM state changed to not inserted (internal modem)
+54;2025-09-25 16:26:16;Switch Events;network;notice;Port link state of port LAN1 changed to DOWN
+55;2025-09-25 16:26:44;Switch Events;network;notice;Port link state of port LAN1 (100 baseT) changed to UP
+56;2025-09-25 16:27:07;Switch Events;network;notice;Port link state of port LAN1 changed to DOWN
+57;2025-09-25 16:27:15;Health checker;network;notice;DNS resolution started to fail
+58;2025-09-25 16:27:30;Switch Events;network;notice;Port link state of port LAN1 (100 baseT) changed to UP
+59;2025-09-25 16:28:15;CONFIG;events;notice;"User ""admin"" changed Nlbwmon configuration in ""/status/network/topology"" page"
+60;2025-09-25 16:29:24;Switch Events;network;notice;Port link state of port LAN1 changed to DOWN
+61;2025-09-25 16:29:35;WiFi;connections;notice;RUT_E127_5G: WiFi client disconnected: B0:DC:EF:B1:CB:23
+62;2025-09-25 16:29:36;WiFi;connections;notice;RUT_E127_5G: WiFi client connected: B0:DC:EF:B1:CB:23
+63;2025-09-25 16:29:46;Switch Events;network;notice;Port link state of port LAN1 (100 baseT) changed to UP
+64;2025-09-25 16:29:54;WiFi;connections;notice;RUT_E127_5G: WiFi client disconnected: B0:DC:EF:B1:CB:23
+65;2025-09-25 16:29:57;WiFi;connections;notice;RUT_E127_5G: WiFi client connected: B0:DC:EF:B1:CB:23
+66;2025-09-25 16:30:10;Switch Events;network;notice;Port link state of port LAN1 changed to DOWN
+67;2025-09-25 16:30:34;Switch Events;network;notice;Port link state of port LAN1 (100 baseT) changed to UP
+68;2025-09-25 16:30:56;Switch Events;network;notice;Port link state of port LAN1 changed to DOWN
+69;2025-09-25 16:31:01;WiFi;connections;notice;RUT_E127_5G: WiFi client disconnected: B0:DC:EF:B1:CB:23
+70;2025-09-25 16:31:19;Switch Events;network;notice;Port link state of port LAN1 (100 baseT) changed to UP
+71;2025-09-25 16:32:22;Switch Events;network;notice;Port link state of port LAN1 changed to DOWN
+72;2025-09-25 16:32:49;Switch Events;network;notice;Port link state of port LAN1 (100 baseT) changed to UP
+73;2025-09-25 16:33:31;Switch Events;network;notice;Port link state of port LAN1 changed to DOWN
+74;2025-09-25 16:33:57;Switch Events;network;notice;Port link state of port LAN1 (100 baseT) changed to UP
+75;2025-09-25 16:34:13;Switch Events;network;notice;Port link state of port LAN1 changed to DOWN
+76;2025-09-25 16:34:35;Switch Events;network;notice;Port link state of port LAN1 (100 baseT) changed to UP
+77;2025-09-25 16:46:00;WiFi;connections;notice;RUT_E127_5G: WiFi client connected: B0:DC:EF:B1:CB:23
+78;2025-09-25 16:47:02;Web UI;connections;notice;"User ""admin"" successfully authenticated on HTTPS from 192.168.1.232 to 192.168.1.1"
+79;2025-09-25 16:50:18;Switch Events;network;notice;Port link state of port LAN1 changed to DOWN
+80;2025-09-25 16:50:50;WiFi;connections;notice;RUT_E127_5G: WiFi client connected: 82:D8:62:12:45:CB
+81;2025-09-25 16:50:54;DHCP;network;info;Leased 192.168.1.224 IP address for client 82:d8:62:12:45:cb - realme-8s-5G in WiFi
+82;2025-09-25 16:52:01;Web UI;connections;notice;"User ""admin"" successfully authenticated on HTTPS from 192.168.1.232 to 192.168.1.1"
+83;2025-09-25 16:55:01;WiFi;connections;notice;RUT_E127_5G: WiFi client disconnected: 82:D8:62:12:45:CB
+84;2025-09-25 17:04:30;Switch Events;network;notice;Port link state of port WAN (1000 baseT) changed to UP
+85;2025-09-25 17:05:38;CONFIG;events;notice;"User ""admin"" changed Network configuration in ""/network/wan"" page"
+86;2025-09-25 17:05:42;Switch Events;network;notice;Port link state of port WAN changed to DOWN
+87;2025-09-25 17:05:44;Switch Events;network;notice;Port link state of port WAN (1000 baseT) changed to UP
+88;2025-09-25 17:07:02;Switch Events;network;notice;Port link state of port WAN changed to DOWN
+89;2025-09-25 17:07:10;Switch Events;network;notice;Port link state of port WAN (1000 baseT) changed to UP
+90;2025-09-25 17:08:26;Switch Events;network;notice;Port link state of port WAN changed to DOWN
+91;2025-09-25 17:08:30;CONFIG;events;notice;"User ""admin"" changed Mwan3 configuration in ""/network/wan"" page"
+92;2025-09-25 17:08:30;CONFIG;events;notice;"User ""admin"" changed Firewall configuration in ""/network/wan"" page"
+93;2025-09-25 17:08:30;CONFIG;events;notice;"User ""admin"" changed Network configuration in ""/network/wan"" page"
+94;2025-09-25 17:10:10;CONFIG;events;notice;"User ""admin"" changed Network configuration in ""/network/wireless/ssids"" page"
+95;2025-09-25 17:10:10;CONFIG;events;notice;"User ""admin"" changed Wireless configuration in ""/network/wireless/ssids"" page"
+96;2025-09-25 17:10:10;CONFIG;events;notice;"User ""admin"" changed Mwan3 configuration in ""/network/wireless/ssids"" page"
+97;2025-09-25 17:10:10;CONFIG;events;notice;"User ""admin"" changed Firewall configuration in ""/network/wireless/ssids"" page"
+98;2025-09-25 17:10:15;WiFi;connections;notice;RUT_E127_5G: WiFi client disconnected: B0:DC:EF:B1:CB:23
+99;2025-09-25 17:10:30;Health checker;network;notice;DNS resolution restored
+100;2025-09-25 17:11:30;Health checker;network;notice;IPv4 connectivity restored
+101;2025-09-25 17:12:35;WiFi;connections;notice;RUT_E127_5G: WiFi client connected: B0:DC:EF:B1:CB:23
+102;2025-09-25 17:12:44;CONFIG;events;notice;"User ""admin"" changed Overview configuration in ""/status/overview"" page"
+103;2025-09-25 17:14:30;CONFIG;events;notice;"User ""admin"" changed Wireless configuration in ""/network/wireless/ssids"" page"
+104;2025-09-25 17:14:46;WiFi;connections;notice;RUT_D8B8_2G: WiFi client connected: EC:64:C9:91:08:70
+105;2025-09-25 17:14:47;WiFi;connections;notice;RUT_D8B8_2G: WiFi client connected: D8:13:2A:30:5F:88
+106;2025-09-25 17:14:47;WiFi;connections;notice;RUT_D8B8_2G: WiFi client connected: EC:64:C9:91:04:5C
+107;2025-09-25 17:14:47;WiFi;connections;notice;RUT_D8B8_2G: WiFi client connected: 30:C9:22:EF:95:88
+108;2025-09-25 17:14:58;DHCP;network;info;Leased 192.168.1.226 IP address for client ec:64:c9:91:08:70 - esp32-910870 in WiFi
+109;2025-09-25 17:14:59;DHCP;network;info;Leased 192.168.1.150 IP address for client d8:13:2a:30:5f:88 - esp32-305F88 in WiFi
+110;2025-09-25 17:14:59;DHCP;network;info;Leased 192.168.1.160 IP address for client ec:64:c9:91:04:5c - esp32-91045C in WiFi
+111;2025-09-25 17:15:00;DHCP;network;info;Leased 192.168.1.231 IP address for client 30:c9:22:ef:95:88 - esp32-EF9588 in WiFi
+112;2025-09-25 17:15:15;CONFIG;events;notice;"User ""admin"" changed Network configuration in ""/network/wireless/ssids"" page"
+113;2025-09-25 17:15:15;CONFIG;events;notice;"User ""admin"" changed Wireless configuration in ""/network/wireless/ssids"" page"
+114;2025-09-25 17:15:15;CONFIG;events;notice;"User ""admin"" changed Mwan3 configuration in ""/network/wireless/ssids"" page"
+115;2025-09-25 17:15:15;CONFIG;events;notice;"User ""admin"" changed Firewall configuration in ""/network/wireless/ssids"" page"
+116;2025-09-25 17:15:19;WiFi;connections;notice;RUT_D8B8_2G: WiFi client disconnected: 30:C9:22:EF:95:88
+117;2025-09-25 17:15:19;WiFi;connections;notice;RUT_D8B8_2G: WiFi client disconnected: EC:64:C9:91:04:5C
+118;2025-09-25 17:15:19;WiFi;connections;notice;RUT_D8B8_2G: WiFi client disconnected: D8:13:2A:30:5F:88
+119;2025-09-25 17:15:19;WiFi;connections;notice;RUT_D8B8_2G: WiFi client disconnected: EC:64:C9:91:08:70
+120;2025-09-25 17:15:21;CONFIG;events;notice;"User ""admin"" changed Wireless configuration in ""/network/wireless/ssids"" page"
+121;2025-09-25 17:15:33;WiFi;connections;notice;RUT_D8B8_2G: WiFi client connected: EC:64:C9:91:08:70
+122;2025-09-25 17:15:33;WiFi;connections;notice;RUT_D8B8_2G: WiFi client connected: 30:C9:22:EF:95:88
+123;2025-09-25 17:15:35;WiFi;connections;notice;RUT_D8B8_2G: WiFi client disconnected: 30:C9:22:EF:95:88
+124;2025-09-25 17:15:35;WiFi;connections;notice;RUT_D8B8_2G: WiFi client disconnected: EC:64:C9:91:08:70
+125;2025-09-25 17:15:36;WiFi;connections;notice;RUT_D8B8_2G: WiFi client connected: 30:C9:22:EF:95:88
+126;2025-09-25 17:15:36;WiFi;connections;notice;RUT_D8B8_2G: WiFi client connected: EC:64:C9:91:08:70
+127;2025-09-25 17:15:38;WiFi;connections;notice;RUT_D8B8_2G: WiFi client connected: D8:13:2A:30:5F:88
+128;2025-09-25 17:15:38;WiFi;connections;notice;RUT_D8B8_2G: WiFi client connected: EC:64:C9:91:04:5C
+129;2025-09-25 17:15:44;WiFi;connections;notice;RUT_D8B8_2G: WiFi client disconnected: EC:64:C9:91:04:5C
+130;2025-09-25 17:15:45;WiFi;connections;notice;RUT_D8B8_2G: WiFi client disconnected: D8:13:2A:30:5F:88
+131;2025-09-25 17:15:45;WiFi;connections;notice;RUT_D8B8_2G: WiFi client disconnected: EC:64:C9:91:08:70
+132;2025-09-25 17:15:45;WiFi;connections;notice;RUT_D8B8_2G: WiFi client disconnected: 30:C9:22:EF:95:88
+133;2025-09-25 17:16:00;WiFi;connections;notice;RUT_D8B8_2G: WiFi client connected: EC:64:C9:91:04:5C
+134;2025-09-25 17:16:00;WiFi;connections;notice;RUT_D8B8_2G: WiFi client disconnected: EC:64:C9:91:04:5C
+135;2025-09-25 17:16:01;WiFi;connections;notice;RUT_D8B8_2G: WiFi client connected: 30:C9:22:EF:95:88
+136;2025-09-25 17:16:02;WiFi;connections;notice;RUT_D8B8_2G: WiFi client connected: EC:64:C9:91:08:70
+137;2025-09-25 17:16:03;WiFi;connections;notice;RUT_D8B8_2G: WiFi client connected: D8:13:2A:30:5F:88
+138;2025-09-25 17:16:08;WiFi;connections;notice;RUT_D8B8_2G: WiFi client connected: EC:64:C9:91:04:5C
+139;2025-09-25 17:17:04;CONFIG;events;notice;"User ""admin"" changed Mwan3 configuration in ""/network/wan"" page"
+140;2025-09-25 17:17:04;CONFIG;events;notice;"User ""admin"" changed Firewall configuration in ""/network/wan"" page"
+141;2025-09-25 17:17:04;CONFIG;events;notice;"User ""admin"" changed Network configuration in ""/network/wan"" page"
+142;2025-09-25 17:17:51;WiFi;connections;notice;RUT_D8B8_2G: WiFi client disconnected: EC:64:C9:91:04:5C
+143;2025-09-25 17:17:52;WiFi;connections;notice;RUT_D8B8_2G: WiFi client connected: EC:64:C9:91:04:5C
+144;2025-09-25 17:18:10;WiFi;connections;notice;RUT_D8B8_2G: WiFi client disconnected: EC:64:C9:91:08:70
+145;2025-09-25 17:18:11;WiFi;connections;notice;RUT_D8B8_2G: WiFi client connected: EC:64:C9:91:08:70
+146;2025-09-25 17:18:24;WiFi;connections;notice;RUT_D8B8_2G: WiFi client disconnected: EC:64:C9:91:08:70
+147;2025-09-25 17:18:24;WiFi;connections;notice;RUT_D8B8_2G: WiFi client connected: EC:64:C9:91:08:70
+148;2025-09-25 17:18:39;WiFi;connections;notice;RUT_D8B8_2G: WiFi client disconnected: EC:64:C9:91:08:70
+149;2025-09-25 17:18:39;WiFi;connections;notice;RUT_D8B8_2G: WiFi client connected: EC:64:C9:91:08:70
+150;2025-09-25 17:20:23;WiFi;connections;notice;RUT_D8B8_2G: WiFi client disconnected: EC:64:C9:91:08:70
+151;2025-09-25 17:20:44;WiFi;connections;notice;RUT_D8B8_2G: WiFi client disconnected: 30:C9:22:EF:95:88
+152;2025-09-25 17:20:44;WiFi;connections;notice;RUT_D8B8_2G: WiFi client connected: 30:C9:22:EF:95:88
+153;2025-09-25 17:21:08;WiFi;connections;notice;RUT_D8B8_2G: WiFi client disconnected: 30:C9:22:EF:95:88
+154;2025-09-25 17:21:08;WiFi;connections;notice;RUT_D8B8_2G: WiFi client connected: 30:C9:22:EF:95:88
+155;2025-09-25 17:22:04;WiFi;connections;notice;RUT_D8B8_2G: WiFi client disconnected: 30:C9:22:EF:95:88
+156;2025-09-25 17:22:04;WiFi;connections;notice;RUT_D8B8_2G: WiFi client connected: 30:C9:22:EF:95:88
+157;2025-09-25 17:22:19;WiFi;connections;notice;RUT_D8B8_2G: WiFi client disconnected: 30:C9:22:EF:95:88
+158;2025-09-25 17:22:20;WiFi;connections;notice;RUT_D8B8_2G: WiFi client connected: 30:C9:22:EF:95:88
+159;2025-09-25 17:22:37;WiFi;connections;notice;RUT_D8B8_2G: WiFi client disconnected: 30:C9:22:EF:95:88
+160;2025-09-25 17:22:38;WiFi;connections;notice;RUT_D8B8_2G: WiFi client connected: 30:C9:22:EF:95:88
+161;2025-09-25 17:22:56;WiFi;connections;notice;RUT_D8B8_2G: WiFi client disconnected: EC:64:C9:91:04:5C
+162;2025-09-25 17:22:56;WiFi;connections;notice;RUT_D8B8_2G: WiFi client connected: EC:64:C9:91:04:5C
+163;2025-09-25 17:23:06;WiFi;connections;notice;RUT_D8B8_2G: WiFi client disconnected: D8:13:2A:30:5F:88
+164;2025-09-25 17:23:45;WiFi;connections;notice;RUT_D8B8_2G: WiFi client disconnected: EC:64:C9:91:04:5C
+165;2025-09-25 17:23:45;WiFi;connections;notice;RUT_D8B8_2G: WiFi client connected: EC:64:C9:91:04:5C
+166;2025-09-25 17:24:02;WiFi;connections;notice;RUT_D8B8_2G: WiFi client disconnected: EC:64:C9:91:04:5C
+167;2025-09-25 17:24:03;WiFi;connections;notice;RUT_D8B8_2G: WiFi client connected: EC:64:C9:91:04:5C
+168;2025-09-25 17:24:25;WiFi;connections;notice;RUT_D8B8_2G: WiFi client disconnected: EC:64:C9:91:04:5C
+169;2025-09-25 17:24:26;WiFi;connections;notice;RUT_D8B8_2G: WiFi client connected: EC:64:C9:91:04:5C
+170;2025-09-25 17:25:17;WiFi;connections;notice;RUT_D8B8_2G: WiFi client disconnected: EC:64:C9:91:04:5C
+171;2025-09-25 17:25:18;WiFi;connections;notice;RUT_D8B8_2G: WiFi client connected: EC:64:C9:91:04:5C
+172;2025-09-25 17:25:50;WiFi;connections;notice;RUT_D8B8_2G: WiFi client connected: D8:13:2A:30:5F:88
+173;2025-09-25 17:26:17;WiFi;connections;notice;RUT_D8B8_2G: WiFi client disconnected: D8:13:2A:30:5F:88
+174;2025-09-25 17:26:18;WiFi;connections;notice;RUT_D8B8_2G: WiFi client connected: D8:13:2A:30:5F:88
+175;2025-09-25 17:27:09;WiFi;connections;notice;RUT_D8B8_2G: WiFi client disconnected: D8:13:2A:30:5F:88
+176;2025-09-25 17:27:10;WiFi;connections;notice;RUT_D8B8_2G: WiFi client connected: D8:13:2A:30:5F:88
+177;2025-09-25 17:27:48;WiFi;connections;notice;RUT_D8B8_2G: WiFi client disconnected: D8:13:2A:30:5F:88
+178;2025-09-25 17:27:48;WiFi;connections;notice;RUT_D8B8_2G: WiFi client connected: D8:13:2A:30:5F:88
+179;2025-09-25 17:28:05;WiFi;connections;notice;RUT_D8B8_2G: WiFi client disconnected: D8:13:2A:30:5F:88
+180;2025-09-25 17:28:06;WiFi;connections;notice;RUT_D8B8_2G: WiFi client connected: D8:13:2A:30:5F:88
+181;2025-09-25 17:28:11;WiFi;connections;notice;RUT_D8B8_2G: WiFi client disconnected: 30:C9:22:EF:95:88
+182;2025-09-25 17:28:19;WiFi;connections;notice;RUT_D8B8_2G: WiFi client disconnected: D8:13:2A:30:5F:88
+183;2025-09-25 17:28:19;WiFi;connections;notice;RUT_D8B8_2G: WiFi client connected: D8:13:2A:30:5F:88
+184;2025-09-25 17:28:29;WiFi;connections;notice;RUT_D8B8_2G: WiFi client disconnected: EC:64:C9:91:04:5C
+185;2025-09-25 17:28:30;WiFi;connections;notice;RUT_D8B8_2G: WiFi client connected: EC:64:C9:91:04:5C
+186;2025-09-25 17:28:32;WiFi;connections;notice;RUT_D8B8_2G: WiFi client connected: 30:C9:22:EF:95:88
+187;2025-09-25 17:28:41;WiFi;connections;notice;RUT_D8B8_2G: WiFi client connected: EC:64:C9:91:08:70

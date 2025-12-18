@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Device Event History | Edge-AI SOC</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'soc-bg': '#1e293b',    // Slate-800
+                        'soc-card': '#334155',  // Slate-700
+                        'soc-primary': '#60a5fa', // Blue-400
+                        'soc-alert': '#f87171', // Red-400
+                        'soc-safe': '#4ade80',  // Green-400
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #334155; }
+        ::-webkit-scrollbar-thumb { background: #60a5fa; border-radius: 4px; }
+        .sort-icon { display: inline-block; width: 0.75rem; height: 0.75rem; margin-left: 0.25rem; }
+    </style>
+</head>
+
+<body class="bg-soc-bg text-gray-100 font-sans p-4 sm:p-8">
+    <div class="max-w-7xl mx-auto">
+        <!-- Header & Navigation -->
+        <header class="mb-8 border-b border-soc-card pb-4 flex justify-between items-center">
+            <div>
+                <h1 class="text-3xl font-bold text-soc-primary tracking-tight">Device Event History</h1>
+                <p class="text-gray-400 text-sm mt-1">Detailed audit log of network activity and anomalies</p>
+            </div>
+            <a href="/" class="flex items-center text-sm font-semibold text-white bg-soc-card hover:bg-slate-600 border border-slate-600 py-2 px-4 rounded-lg transition-colors shadow-sm">
+                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+                Back to Dashboard
+            </a>
+        </header>
+
+        <!-- Controls: Search, Limit, Pagination Info -->
+        <div class="flex flex-col md:flex-row justify-between items-end md:items-center mb-6 gap-4">
+            <!-- Search Bar -->
+            <div class="relative w-full md:w-1/3">
+                <input type="text" id="searchInput" onkeyup="searchTable()" placeholder="Search by Device Name or MAC..." class="w-full bg-soc-card text-gray-200 border border-slate-600 rounded-lg py-2 px-4 focus:outline-none focus:ring-2 focus:ring-soc-primary placeholder-gray-500 shadow-sm">
+                <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                    <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                </div>
+            </div>
+
+            <!-- Data Controls -->
+            <div class="flex items-center gap-4 text-sm text-gray-400">
+                <div class="flex items-center">
+                    <label for="limitSelect" class="mr-2">Load:</label>
+                    <select id="limitSelect" onchange="updateLimit()" class="bg-soc-card border border-slate-600 rounded px-2 py-1 focus:outline-none focus:ring-1 focus:ring-soc-primary">
+                        <option value="100" selected>100</option>
+                        <option value="200">200</option>
+                        <option value="500">500</option>
+                        <option value="1000">1000</option>
+                    </select>
+                </div>
+
+                <div>
+                    Showing <span id="showingStart">1</span>-<span id="showingEnd">100</span> of <span id="totalEvents" class="font-bold text-white">{{ events|length }}</span> events
+                </div>
+            </div>
+        </div>
+
+        <!-- Event Log Table -->
+        <div class="bg-soc-card rounded-lg shadow-xl overflow-hidden border border-slate-600 mb-4">
+            <div class="overflow-x-auto">
+                <table class="w-full text-sm text-left" id="eventsTable">
+                    <thead class="bg-slate-800 text-gray-300 uppercase text-xs border-b border-slate-600 select-none">
+                        <tr>
+                            <th scope="col" class="px-6 py-4 font-semibold tracking-wide cursor-pointer hover:text-white group" onclick="sortTable(0)">
+                                Timestamp <span class="sort-icon group-hover:opacity-100 opacity-50">⇅</span>
+                            </th>
+                            <th scope="col" class="px-6 py-4 font-semibold tracking-wide cursor-pointer hover:text-white group" onclick="sortTable(1)">
+                                Device Name <span class="sort-icon group-hover:opacity-100 opacity-50">⇅</span>
+                            </th>
+                            <th scope="col" class="px-6 py-4 font-semibold tracking-wide cursor-pointer hover:text-white group" onclick="sortTable(2, true)">
+                                Usage (KB) <span class="sort-icon group-hover:opacity-100 opacity-50">⇅</span>
+                            </th>
+                            <th scope="col" class="px-6 py-4 font-semibold tracking-wide cursor-pointer hover:text-white group" onclick="sortTable(3, true)">
+                                Risk Score <span class="sort-icon group-hover:opacity-100 opacity-50">⇅</span>
+                            </th>
+                            <th scope="col" class="px-6 py-4 font-semibold tracking-wide text-center cursor-pointer hover:text-white group" onclick="sortTable(4)">
+                                Status <span class="sort-icon group-hover:opacity-100 opacity-50">⇅</span>
+                            </th>
+                            <th scope="col" class="px-6 py-4 font-semibold tracking-wide text-right">
+                                Actions
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-slate-600" id="tableBody">
+                        {% for event in events %}
+                        {% set is_anomaly = event.anomaly_flag == 'YES' %}
+                        <tr class="hover:bg-slate-700/50 transition-colors group {% if is_anomaly %}bg-red-900/10{% endif %} event-row">
+                            <td class="px-6 py-4 font-mono text-gray-400 whitespace-nowrap" data-val="{{ event.timestamp }}">{{ event.timestamp }}</td>
+                            <td class="px-6 py-4 font-medium text-white" data-val="{{ event.device_name }}">
+                                {{ event.device_name }}
+                                <br>
+                                <span class="text-xs text-gray-500 font-mono">{{ event.device_mac }}</span>
+                            </td>
+                            <td class="px-6 py-4 text-gray-300 font-mono" data-val="{{ event.usage }}">{{ event.usage }}</td>
+                            <td class="px-6 py-4 font-bold" data-val="{{ event.risk_score }}">
+                                {% set risk_val = event.risk_score | float %}
+                                <div class="flex items-center">
+                                    <div class="w-full bg-slate-700 rounded-full h-1.5 mr-2 max-w-[60px]">
+                                        <div class="h-1.5 rounded-full {% if risk_val > 0.8 %}bg-soc-alert{% elif risk_val > 0.5 %}bg-yellow-400{% else %}bg-soc-safe{% endif %}" style="width: {{ risk_val * 100 }}%"></div>
+                                    </div>
+                                    <span class="{% if risk_val > 0.8 %}text-soc-alert{% elif risk_val > 0.5 %}text-yellow-400{% else %}text-soc-safe{% endif %}">
+                                        {{ (risk_val * 100)|round(1) }}%
+                                    </span>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4 text-center" data-val="{{ '1' if is_anomaly else '0' }}">
+                                {% if is_anomaly %}
+                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-red-900 text-red-200 border border-red-700">
+                                        THREAT
+                                    </span>
+                                {% else %}
+                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-900 text-green-200 border border-green-700">
+                                        Normal
+                                    </span>
+                                {% endif %}
+                            </td>
+                            <td class="px-6 py-4 text-right">
+                                {% if is_anomaly %}
+                                    <button onclick="isolateDevice('{{ event.device_mac }}', '{{ event.device_name }}')" class="text-xs bg-transparent border border-red-500 text-red-400 hover:bg-red-600 hover:text-white font-semibold py-1 px-3 rounded transition-all duration-200 shadow-sm">
+                                        ISOLATE
+                                    </button>
+                                {% else %}
+                                    <span class="text-gray-600 text-xs">-</span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+
+                        {% if not events %}
+                        <tr id="noDataRow">
+                            <td colspan="6" class="px-6 py-12 text-center text-gray-500 italic">
+                                No logs found in database. Run the monitor script to generate data.
+                            </td>
+                        </tr>
+                        {% endif %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Pagination Controls -->
+        <div class="flex flex-col sm:flex-row justify-between items-center border-t border-slate-600 pt-4">
+            <div class="text-sm text-gray-400 mb-2 sm:mb-0">
+                Rows per page:
+                <select id="rowsPerPage" onchange="changeRowsPerPage()" class="bg-soc-card border border-slate-600 rounded px-2 py-1 ml-2 focus:outline-none focus:ring-1 focus:ring-soc-primary">
+                    <option value="10">10</option>
+                    <option value="25">25</option>
+                    <option value="50" selected>50</option>
+                    <option value="100">100</option>
+                </select>
+            </div>
+            <div class="flex gap-2">
+                <button onclick="prevPage()" id="btnPrev" class="flex items-center px-4 py-2 text-sm font-medium text-gray-300 bg-soc-card border border-slate-600 rounded-lg hover:bg-slate-600 hover:text-white disabled:opacity-50 disabled:cursor-not-allowed">
+                    <svg class="w-3.5 h-3.5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+                    Previous
+                </button>
+                <button onclick="nextPage()" id="btnNext" class="flex items-center px-4 py-2 text-sm font-medium text-gray-300 bg-soc-card border border-slate-600 rounded-lg hover:bg-slate-600 hover:text-white disabled:opacity-50 disabled:cursor-not-allowed">
+                    Next
+                    <svg class="w-3.5 h-3.5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // --- STATE MANAGEMENT ---
+        let currentPage = 1;
+        let rowsPerPage = 50;
+        let sortDirection = {}; // Store sort state per column: {0: 'asc', 1: 'desc'}
+
+        // --- INITIALIZATION ---
+        window.onload = function() {
+            // Check if there is a limit param in URL to set the select box
+            const urlParams = new URLSearchParams(window.location.search);
+            const limit = urlParams.get('limit');
+            if(limit) {
+                document.getElementById('limitSelect').value = limit;
+            }
+            renderPagination();
+        };
+
+        // --- LOGIC: PAGINATION ---
+        function changeRowsPerPage() {
+            rowsPerPage = parseInt(document.getElementById('rowsPerPage').value);
+            currentPage = 1;
+            renderPagination();
+        }
+
+        function prevPage() {
+            if (currentPage > 1) {
+                currentPage--;
+                renderPagination();
+            }
+        }
+
+        function nextPage() {
+            const tbody = document.getElementById("tableBody");
+            const tr = Array.from(tbody.getElementsByTagName("tr")).filter(row => row.style.display !== 'none'); // Only count visible (searched) rows?
+            // Simple approach: Pagination applies to the currently filtered set of rows
+            const visibleRows = getVisibleRows();
+            const totalPages = Math.ceil(visibleRows.length / rowsPerPage);
+
+            if (currentPage < totalPages) {
+                currentPage++;
+                renderPagination();
+            }
+        }
+
+        function renderPagination() {
+            const visibleRows = getVisibleRows();
+            const totalRows = visibleRows.length;
+            const totalPages = Math.ceil(totalRows / rowsPerPage);
+
+            // Update state buttons
+            document.getElementById("btnPrev").disabled = currentPage === 1;
+            document.getElementById("btnNext").disabled = currentPage === totalPages || totalPages === 0;
+
+            // Calculate range
+            const start = (currentPage - 1) * rowsPerPage;
+            const end = start + rowsPerPage;
+
+            // Show/Hide Rows based on page
+            // First hide all, then show range
+            // Note: We need to iterate ALL rows to handle search visibility + pagination
+            const allRows = Array.from(document.getElementById("tableBody").getElementsByTagName("tr"));
+
+            // First, apply search filter state (resetting standard display)
+            let visibleCount = 0;
+            let displayedOnPageCount = 0;
+
+            allRows.forEach(row => {
+                if(row.id === "noDataRow") return;
+
+                // Check search filter
+                if (row.classList.contains("filtered-out")) {
+                    row.style.display = "none";
+                } else {
+                    // It matches search, now check pagination
+                    if (visibleCount >= start && visibleCount < end) {
+                        row.style.display = "";
+                        displayedOnPageCount++;
+                    } else {
+                        row.style.display = "none";
+                    }
+                    visibleCount++;
+                }
+            });
+
+            // Update Info Text
+            document.getElementById("showingStart").innerText = totalRows > 0 ? start + 1 : 0;
+            document.getElementById("showingEnd").innerText = Math.min(end, totalRows);
+            document.getElementById("totalEvents").innerText = totalRows;
+        }
+
+        function getVisibleRows() {
+            const allRows = Array.from(document.getElementById("tableBody").getElementsByTagName("tr"));
+            return allRows.filter(row => row.id !== "noDataRow" && !row.classList.contains("filtered-out"));
+        }
+
+        // --- LOGIC: SORTING ---
+        function sortTable(colIndex, isNumeric = false) {
+            const table = document.getElementById("eventsTable");
+            const tbody = document.getElementById("tableBody");
+            const rows = Array.from(tbody.getElementsByTagName("tr"));
+
+            // Ignore "no data" row
+            if(rows.length === 1 && rows[0].id === "noDataRow") return;
+
+            // Toggle direction
+            const currentDir = sortDirection[colIndex] === 'asc' ? 'desc' : 'asc';
+            sortDirection = {}; // Clear others
+            sortDirection[colIndex] = currentDir;
+
+            // Update icons visually
+            updateSortIcons(colIndex, currentDir);
+
+            // Sort
+            rows.sort((a, b) => {
+                const cellA = a.getElementsByTagName("td")[colIndex];
+                const cellB = b.getElementsByTagName("td")[colIndex];
+
+                let valA = cellA ? (cellA.getAttribute('data-val') || cellA.innerText).trim() : '';
+                let valB = cellB ? (cellB.getAttribute('data-val') || cellB.innerText).trim() : '';
+
+                if (isNumeric) {
+                    valA = parseFloat(valA) || 0;
+                    valB = parseFloat(valB) || 0;
+                } else {
+                    valA = valA.toLowerCase();
+                    valB = valB.toLowerCase();
+                }
+
+                if (valA < valB) return currentDir === 'asc' ? -1 : 1;
+                if (valA > valB) return currentDir === 'asc' ? 1 : -1;
+                return 0;
+            });
+
+            // Re-append sorted rows
+            rows.forEach(row => tbody.appendChild(row));
+
+            // Re-render pagination to keep view consistent
+            renderPagination();
+        }
+
+        function updateSortIcons(activeIndex, dir) {
+            const headers = document.querySelectorAll("th .sort-icon");
+            headers.forEach((icon, index) => {
+                if (index === activeIndex) {
+                    icon.innerText = dir === 'asc' ? '▲' : '▼';
+                    icon.classList.remove('opacity-50');
+                    icon.classList.add('opacity-100', 'text-soc-primary');
+                } else {
+                    icon.innerText = '⇅';
+                    icon.classList.add('opacity-50');
+                    icon.classList.remove('opacity-100', 'text-soc-primary');
+                }
+            });
+        }
+
+        // --- LOGIC: SEARCH ---
+        function searchTable() {
+            const input = document.getElementById("searchInput");
+            const filter = input.value.toUpperCase();
+            const tbody = document.getElementById("tableBody");
+            const rows = tbody.getElementsByTagName("tr");
+
+            for (let i = 0; i < rows.length; i++) {
+                if(rows[i].id === "noDataRow") continue;
+
+                const tdName = rows[i].getElementsByTagName("td")[1]; // Device Name Column
+                const tdMac = rows[i].querySelector("span"); // Device MAC
+
+                if (tdName || tdMac) {
+                    const txtValue = (tdName.textContent || tdName.innerText) + " " + (tdMac ? tdMac.innerText : "");
+                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                        rows[i].classList.remove("filtered-out");
+                    } else {
+                        rows[i].classList.add("filtered-out");
+                    }
+                }
+            }
+            // Reset to page 1 after search
+            currentPage = 1;
+            renderPagination();
+        }
+
+        // --- LOGIC: LOAD LIMIT ---
+        function updateLimit() {
+            const limit = document.getElementById('limitSelect').value;
+            // Reload page with new limit param
+            // NOTE: Requires server side implementation to handle ?limit=X
+            // Since we are in a prototype, this demonstrates the UI intent.
+            const url = new URL(window.location.href);
+            url.searchParams.set('limit', limit);
+            window.location.href = url.toString();
+        }
+
+        // --- ACTION: ISOLATE ---
+        function isolateDevice(mac, name) {
+            if(!confirm(`SECURITY ALERT:\nAre you sure you want to ISOLATE device "${name}" (${mac}) from the network?`)) return;
+
+            fetch('/api/take_action', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ action: 'ISOLATE', device_mac: mac, device_name: name })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if(data.status === 'success') alert("✅ SUCCESS: " + data.message);
+                else alert("❌ ERROR: " + data.message);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert("❌ Network Error: Failed to send command.");
+            });
+        }
+    </script>
+</body>
+</html>
