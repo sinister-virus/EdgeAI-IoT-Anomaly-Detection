@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IoT Security System - SOC Dashboard</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: #333;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        header {
+            background: white;
+            padding: 20px 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        
+        h1 {
+            color: #1e3c72;
+            font-size: 28px;
+            margin-bottom: 5px;
+        }
+        
+        .subtitle {
+            color: #666;
+            font-size: 14px;
+        }
+        
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .stat-card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        .stat-card h3 {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+        
+        .stat-value {
+            font-size: 32px;
+            font-weight: bold;
+            color: #1e3c72;
+        }
+        
+        .stat-card.danger .stat-value {
+            color: #e74c3c;
+        }
+        
+        .stat-card.success .stat-value {
+            color: #27ae60;
+        }
+        
+        .stat-card.warning .stat-value {
+            color: #f39c12;
+        }
+        
+        .main-content {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 20px;
+        }
+        
+        .panel {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        .panel h2 {
+            color: #1e3c72;
+            margin-bottom: 20px;
+            font-size: 20px;
+        }
+        
+        .button-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        
+        button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        
+        .btn-primary {
+            background: #1e3c72;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: #2a5298;
+        }
+        
+        .btn-success {
+            background: #27ae60;
+            color: white;
+        }
+        
+        .btn-success:hover {
+            background: #229954;
+        }
+        
+        .btn-danger {
+            background: #e74c3c;
+            color: white;
+        }
+        
+        .btn-danger:hover {
+            background: #c0392b;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+        
+        th {
+            background: #f8f9fa;
+            color: #1e3c72;
+            font-weight: 600;
+        }
+        
+        tr:hover {
+            background: #f8f9fa;
+        }
+        
+        .anomaly-badge {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        
+        .anomaly-badge.yes {
+            background: #e74c3c;
+            color: white;
+        }
+        
+        .anomaly-badge.no {
+            background: #27ae60;
+            color: white;
+        }
+        
+        .info-item {
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .info-item:last-child {
+            border-bottom: none;
+        }
+        
+        .info-label {
+            color: #666;
+            font-size: 13px;
+            margin-bottom: 5px;
+        }
+        
+        .info-value {
+            color: #1e3c72;
+            font-weight: 600;
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 20px;
+            color: #666;
+        }
+        
+        .status-indicator {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+        
+        .status-indicator.online {
+            background: #27ae60;
+        }
+        
+        @media (max-width: 968px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🛡️ IoT Security System - SOC Dashboard</h1>
+            <p class="subtitle">Real-time Network Anomaly Detection & Monitoring</p>
+        </header>
+        
+        <div class="dashboard-grid">
+            <div class="stat-card">
+                <h3>Total Network Logs</h3>
+                <div class="stat-value" id="total-logs">-</div>
+            </div>
+            <div class="stat-card danger">
+                <h3>Anomalies Detected</h3>
+                <div class="stat-value" id="total-anomalies">-</div>
+            </div>
+            <div class="stat-card warning">
+                <h3>Anomaly Rate</h3>
+                <div class="stat-value" id="anomaly-rate">-</div>
+            </div>
+            <div class="stat-card success">
+                <h3>Recent Activity (1h)</h3>
+                <div class="stat-value" id="recent-logs">-</div>
+            </div>
+        </div>
+        
+        <div class="main-content">
+            <div class="panel">
+                <h2>Recent Network Logs</h2>
+                <div class="button-group">
+                    <button class="btn-primary" onclick="loadRecentLogs()">🔄 Refresh Logs</button>
+                    <button class="btn-success" onclick="analyzeData()">🔍 Analyze Data</button>
+                    <button class="btn-danger" onclick="trainModel()">🧠 Train Model</button>
+                </div>
+                <div id="logs-table">
+                    <div class="loading">Loading logs...</div>
+                </div>
+            </div>
+            
+            <div class="panel">
+                <h2>System Information</h2>
+                <div id="system-info">
+                    <div class="loading">Loading system info...</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Auto-refresh interval (30 seconds)
+        const AUTO_REFRESH_INTERVAL = 30000;
+        
+        // Load statistics
+        async function loadStatistics() {
+            try {
+                const response = await fetch('/api/statistics');
+                const data = await response.json();
+                
+                if (data.success) {
+                    document.getElementById('total-logs').textContent = 
+                        data.statistics.total_logs.toLocaleString();
+                    document.getElementById('total-anomalies').textContent = 
+                        data.statistics.total_anomalies.toLocaleString();
+                    document.getElementById('anomaly-rate').textContent = 
+                        data.statistics.anomaly_rate.toFixed(2) + '%';
+                    document.getElementById('recent-logs').textContent = 
+                        data.statistics.recent_logs.toLocaleString();
+                    
+                    updateSystemInfo(data.model_info);
+                }
+            } catch (error) {
+                console.error('Error loading statistics:', error);
+            }
+        }
+        
+        // Load recent logs
+        async function loadRecentLogs() {
+            try {
+                const response = await fetch('/api/recent-logs?limit=10');
+                const data = await response.json();
+                
+                if (data.success && data.logs.length > 0) {
+                    displayLogs(data.logs);
+                } else {
+                    document.getElementById('logs-table').innerHTML = 
+                        '<div class="loading">No logs available</div>';
+                }
+            } catch (error) {
+                console.error('Error loading logs:', error);
+                document.getElementById('logs-table').innerHTML = 
+                    '<div class="loading">Error loading logs</div>';
+            }
+        }
+        
+        // Display logs in table
+        function displayLogs(logs) {
+            const tableHTML = `
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Timestamp</th>
+                            <th>Device</th>
+                            <th>Source IP</th>
+                            <th>Dest IP</th>
+                            <th>Port</th>
+                            <th>Anomaly</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${logs.map(log => `
+                            <tr>
+                                <td>${new Date(log.timestamp * 1000).toLocaleString()}</td>
+                                <td>${log.device_id}</td>
+                                <td>${log.source_ip}</td>
+                                <td>${log.destination_ip}</td>
+                                <td>${log.port}</td>
+                                <td>
+                                    <span class="anomaly-badge ${log.is_anomaly ? 'yes' : 'no'}">
+                                        ${log.is_anomaly ? 'YES' : 'NO'}
+                                    </span>
+                                </td>
+                            </tr>
+                        `).join('')}
+                    </tbody>
+                </table>
+            `;
+            document.getElementById('logs-table').innerHTML = tableHTML;
+        }
+        
+        // Update system information
+        function updateSystemInfo(modelInfo) {
+            const infoHTML = `
+                <div class="info-item">
+                    <div class="info-label">System Status</div>
+                    <div class="info-value">
+                        <span class="status-indicator online"></span>Online
+                    </div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Detection Algorithm</div>
+                    <div class="info-value">${modelInfo.algorithm}</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Model Status</div>
+                    <div class="info-value">${modelInfo.is_trained ? 'Trained' : 'Not Trained'}</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Contamination Rate</div>
+                    <div class="info-value">${(modelInfo.contamination * 100).toFixed(1)}%</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Number of Estimators</div>
+                    <div class="info-value">${modelInfo.n_estimators}</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Features Used</div>
+                    <div class="info-value">${modelInfo.n_features || 'N/A'}</div>
+                </div>
+            `;
+            document.getElementById('system-info').innerHTML = infoHTML;
+        }
+        
+        // Analyze data
+        async function analyzeData() {
+            try {
+                const response = await fetch('/api/analyze', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({limit: 1000})
+                });
+                const data = await response.json();
+                
+                if (data.success) {
+                    alert(`Analysis Complete!\n\nTotal Samples: ${data.analysis.total_samples}\nAnomalies Detected: ${data.analysis.anomalies_detected}\nAnomaly Rate: ${data.analysis.anomaly_rate.toFixed(2)}%`);
+                    loadStatistics();
+                    loadRecentLogs();
+                } else {
+                    alert('Analysis failed: ' + data.error);
+                }
+            } catch (error) {
+                console.error('Error analyzing data:', error);
+                alert('Analysis failed: ' + error.message);
+            }
+        }
+        
+        // Train model
+        async function trainModel() {
+            if (!confirm('Are you sure you want to train the model? This may take a moment.')) {
+                return;
+            }
+            
+            try {
+                const response = await fetch('/api/train-model', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({limit: 10000})
+                });
+                const data = await response.json();
+                
+                if (data.success) {
+                    alert(`Training Complete!\n\nTraining Samples: ${data.training_samples}\n${data.message}`);
+                    loadStatistics();
+                } else {
+                    alert('Training failed: ' + data.error);
+                }
+            } catch (error) {
+                console.error('Error training model:', error);
+                alert('Training failed: ' + error.message);
+            }
+        }
+        
+        // Initialize dashboard
+        function initDashboard() {
+            loadStatistics();
+            loadRecentLogs();
+            
+            // Auto-refresh
+            setInterval(() => {
+                loadStatistics();
+                loadRecentLogs();
+            }, AUTO_REFRESH_INTERVAL);
+        }
+        
+        // Start dashboard when page loads
+        window.addEventListener('DOMContentLoaded', initDashboard);
+    </script>
+</body>
+</html>
