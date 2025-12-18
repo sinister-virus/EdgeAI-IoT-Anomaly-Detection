@@ -39,8 +39,8 @@ class FeatureEngineer:
         # Convert timestamp to datetime for easier manipulation
         features_df['datetime'] = pd.to_datetime(features_df['timestamp'], unit='s')
         
-        # Sort by timestamp for delta calculations
-        features_df = features_df.sort_values('timestamp').reset_index(drop=True)
+        # Sort by timestamp for delta calculations (keep original index for ID mapping)
+        features_df = features_df.sort_values('timestamp')
         
         # Vectorized timestamp-based features
         features_df = self._compute_time_deltas(features_df)

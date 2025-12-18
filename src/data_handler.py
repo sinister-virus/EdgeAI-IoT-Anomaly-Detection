@@ -216,8 +216,11 @@ class DataHandler:
             WHERE id = ?
         ''', (1 if is_anomaly else 0, anomaly_score, log_id))
         
+        rows_affected = cursor.rowcount
         conn.commit()
         conn.close()
+        
+        return rows_affected
     
     def get_statistics(self) -> Dict:
         """

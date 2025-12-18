@@ -123,7 +123,7 @@ def analyze_data_cli(data_handler, feature_engineer, anomaly_detector, limit=100
     # Update database
     print("   - Updating database...")
     for idx, (pred, score) in enumerate(zip(predictions, scores)):
-        log_id = features_df.iloc[idx]['id']
+        log_id = int(features_df.iloc[idx]['id'])  # Convert numpy.int64 to Python int
         is_anomaly = pred == -1
         data_handler.update_anomaly_status(log_id, is_anomaly, float(score))
     
